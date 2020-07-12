@@ -30,14 +30,24 @@ function mode1_process () {
     rm ./variable
     rm ./mode1
 }
-function mode2_download () {
+function mode2_download1 () {
     red_log "Downloading file."
     wget https://raw.githubusercontent.com/NSK-1010/Font-Installer-Maker-Scripts/master/mode1
     wget https://raw.githubusercontent.com/NSK-1010/Font-Installer-Maker-Scripts/master/mode2-1
     wget https://raw.githubusercontent.com/NSK-1010/Font-Installer-Maker-Scripts/master/mode2-2
 }
+function mode2_download2 () {
+    read -p "Please enter the name of the font. :" FONTNAME
+    mkdir deb
+    cd deb
+    mkdir ${FONTNAME}
+    cd ${FONTNAME}
+    mkdir DEBIAN
+    wget https://raw.githubusercontent.com/NSK-1010/Font-Installer-Maker-Scripts/master/control
+}
 function mode2_process () {
-    mode2_download
+    mode2_download1
+    mode2_download2
     red_log "Processing file."
     touch ./install.sh
     touch ./install-deb.sh
