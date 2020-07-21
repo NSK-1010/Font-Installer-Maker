@@ -14,9 +14,8 @@ echo "Next, please choose your installer type."
 echo "1 ) Simple installer" 
 echo "2 ) Simple installer and dpkg installer"
 echo "3 ) exit"
-while :
-do
-read -p: TYPE 
+printf "Please enter mode number. : "
+read TYPE 
 echo "Okay"
 function mode1_download () {
     red_log "Downloading file."
