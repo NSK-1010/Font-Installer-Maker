@@ -3,20 +3,26 @@
 function preparation () {
     blue_log "Prease wait..."
     mkdir makerfile
-    wget https://raw.githubusercontent.com/NSK-1010/Font-Installer-Maker-Scripts/master/variable
+    touch variable
 }
 preparation
 echo "Welcome to Font Installer Maker!!"
-echo "Please enter your font information first."
-nano ./variable
-echo "Okay."
-echo "Next, please choose your installer type."
+echo "First, please choose your installer type."
 echo "1 ) Simple installer" 
 echo "2 ) Simple installer and dpkg installer"
 echo "3 ) exit"
 printf "Please enter mode number. : "
 read TYPE 
 echo "Okay"
+read -p "Please enter the name of the font. :" fontname
+read -p "Please enter the URL of the zip file that contains the font." downloadfile
+read -p "Please enter where the font file is located in the zip file. :" dir
+zipname="${fontname}.zip"
+echo "#!/bin/bash" > ./variable
+echo fontname="${fontname}" > ./variable
+echo downloadfile="${downloadfile}" > ./variable
+echo dir="${dir}" > ./variable
+echo zipname="${zipname}" > ./variable
 function mode1_download () {
     red_log "Downloading file."
     wget https://raw.githubusercontent.com/NSK-1010/Font-Installer-Maker-Scripts/master/mode1
@@ -36,17 +42,30 @@ function mode2_download1 () {
     wget https://raw.githubusercontent.com/NSK-1010/Font-Installer-Maker-Scripts/master/mode2-2
 }
 function mode2_download2 () {
-    read -p "Please enter the name of the font. :" FONTNAME
     mkdir deb
     cd deb
-    mkdir "./${FONTNAME}"
-    cd "./${FONTNAME}"
+    mkdir "./${fontnane}"
+    cd "./${fontname}"
     mkdir ./DEBIAN
-    wget https://raw.githubusercontent.com/NSK-1010/Font-Installer-Maker-Scripts/master/control
+    cd ./DEBIAN
+    wget https://raw.githubusercontent.com/NSK-1010/Font-Installer-Maker-Scripts/master/control-base
+    mode2_deb
+}
+function mode2_deb () {
+    read -p "Please enter a package name.:" DPKGNAME
+    touch description
+    echo "Description: [Short Description]" > ./description
+    echo "[Short Description]" > ./description
+    nano ./description
+    touch control
+    echo "Package: ${DPKGNAME}" > ./control
+    cat ./control-base ./description > ./control
+    rm ./control-base
 }
 function mode2_process () {
     mode2_download1
     mode2_download2
+    cd ../../..
     blue_log "Processing file."
     touch ./install.sh
     touch ./install-deb.sh
