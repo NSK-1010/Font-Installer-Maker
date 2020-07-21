@@ -1,7 +1,7 @@
 #!/bin/bash
 
 function preparation () {
-    red_log "Prease wait..."
+    blue_log "Prease wait..."
     mkdir makerfile
     wget https://raw.githubusercontent.com/NSK-1010/Font-Installer-Maker-Scripts/master/variable
 }
@@ -23,14 +23,14 @@ function mode1_download () {
 }
 function mode1_process () {
     mode1_download
-    red_log "Processing file."
+    blue_log "Processing file."
     touch ./install.sh
     cat ./variable ./mode1 > install.sh
     rm ./variable
     rm ./mode1
 }
 function mode2_download1 () {
-    red_log "Downloading file."
+    blue_log "Downloading file."
     wget https://raw.githubusercontent.com/NSK-1010/Font-Installer-Maker-Scripts/master/mode1
     wget https://raw.githubusercontent.com/NSK-1010/Font-Installer-Maker-Scripts/master/mode2-1
     wget https://raw.githubusercontent.com/NSK-1010/Font-Installer-Maker-Scripts/master/mode2-2
@@ -39,15 +39,15 @@ function mode2_download2 () {
     read -p "Please enter the name of the font. :" FONTNAME
     mkdir deb
     cd deb
-    mkdir ${FONTNAME}
-    cd ${FONTNAME}
-    mkdir DEBIAN
+    mkdir "./${FONTNAME}"
+    cd "./${FONTNAME}"
+    mkdir ./DEBIAN
     wget https://raw.githubusercontent.com/NSK-1010/Font-Installer-Maker-Scripts/master/control
 }
 function mode2_process () {
     mode2_download1
     mode2_download2
-    red_log "Processing file."
+    blue_log "Processing file."
     touch ./install.sh
     touch ./install-deb.sh
     touch ./build-deb.sh
@@ -96,7 +96,7 @@ function error () {
 case "$TYPE" in
 	1 ) mode1  ;;
 	2 ) mode2 ;;
-  3 ) exit 0 ;;
-  0 ) error ;;
+        3 ) exit 0 ;;
+        0 ) error ;;
 	* ) error ;;
 esac
