@@ -79,16 +79,16 @@ function mode2_process () {
     rm ./mode2-1
 }
 function mode1_nano () {
-    read -p "Do you want to open nano for advanced editing? (y/n) :" YN
-    if [ "${YN}" = "y" ]; then
+    read -p "Do you want to open nano for advanced editing? (Y/n) :" YN
+    if [ "${YN}" = "y" -a "${YN}" = "Y" ]; then
       nano ./install.sh
     else
       return 0;
     fi
 }
 function mode2_nano () {
-    read -p "Do you want to open nano for advanced editing? (y/n) :" YN1
-    if [ "${YN1}" = "y" ]; then
+    read -n 1 -p "Do you want to open nano for advanced editing? (y/n) :" YN1
+    if [ "${YN1}" = "y" -a "${YN}" = "Y" ]; then
       nano ./install.sh
       nano ./install-deb.sh
       nano ./build.sh
